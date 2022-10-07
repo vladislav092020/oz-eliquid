@@ -1,0 +1,131 @@
+body{
+	color:#000;
+  	font-family:arial;
+  	font-size:16px;
+  	line-height:26px;
+  	font-weight:400
+}
+img {
+	max-width:100%
+}
+a{
+	text-decoration:none !important
+}
+.collection--item-image img, .collection--item-image svg{
+	width:96px
+}
+.home-section--title{
+	font-family:arial;
+  	font-weight:bold;
+  	color:#000 !important;
+  	font-size:22px
+}
+.featured-collection--cta-wrapper{
+	display:none
+}
+.featured-collection--wrapper{
+	margin-bottom: 80px
+}
+.sectionTitle{
+  	text-align:center;
+	font-family:arial;
+  	font-weight:bold;
+  	color:#000 !important;
+  	font-size:22px
+}
+.logoSlider {    
+    width: 860px;
+    margin: 0px auto 80px;
+  	max-width:98%
+}
+#shopify-section-oz-highlights-banners {
+	border-bottom:1px solid #e5ebed;
+  	border-top:1px solid #e5ebed;
+}
+footer p:last-child{
+	margin-top:0;
+  	margin-bottom:0
+}
+.site-footer-block-item:nth-child(2) img{    
+ 	width:70px;
+}
+.site-footer-block-item:nth-child(2) p{
+	margin-bottom:0
+}
+#shopify-section-oz-highlights-banners .highlights-banners-heading {
+    color: #000000;
+    font-weight: bold;
+}
+#shopify-section-oz-highlights-banners {
+	margin-bottom:110px
+}
+.customTxtHeader {
+	color:#fff;
+  	font-size:13px
+}
+.slideshow-slide-overlay{
+	display:none
+}
+.highlight-banners-align-center .highlights-banners-icon{
+	height:50px !important;
+  	width:50px !important;
+  	position:relative
+}
+.highlight-banners-align-center .highlights-banners-icon img{
+	position:absolute;
+  	width:50px;
+  	left:0;
+  	top:0
+}
+.highlight-banners-align-center .highlights-banners-block{
+	justify-content:flex-start
+}
+.announcement-bar-text{
+	font-size:14px;
+}
+#shopify-section-landing-login-notification,#shopify-section-landing-login-notification a{
+	color:#777
+}
+#shopify-section-landing-login-notification a:hover{
+	color:#000
+}
+
+
+th, b, strong {
+    font-family: arial;
+    font-style: normal;
+    font-weight: 600;
+}
+.mobile-nav-content .navmenu-depth-1 > .navmenu-item > .navmenu-link, .site-header-actions, .site-navigation .navmenu-depth-1 > li > a, .site-navigation a{
+    font-family: arial;
+    font-weight: bold;
+    text-transform: none;
+    font-size: 13px;
+}
+.productitem--title a, .productgrid--sidebar-menu .navmenu-link, .filter-item, .utils-showby-item, .cart-item--remove-link, .site-navigation .navmenu-meganav--image-link, .tweet--footer, .tweet--header-screenname, .menulist--menu-link {
+    font-size: 12px;
+    font-weight: bold;
+    color: #5d5d5d;
+	font-family:'arial'
+}
+.productitem--vendor,.stock-level--text{
+	font-size:10px;
+}
+.site-footer-block-content{
+	font-size:12px
+}
+.site-footer-block-title {
+    text-transform: none;
+  	font-family:arial;
+  	text-transform:uppercase;
+    font-size: 12px;
+    font-weight: bold;
+}
+.site-footer-block-content .navmenu-link{
+	color:#868686
+}
+.form-action-row--helper.loginHelp{
+    display: block !important;
+    margin-left: 0;
+    margin-top: 20px;
+}

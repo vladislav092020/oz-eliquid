@@ -1,0 +1,28 @@
+<h2>{{ section.settings.section_title }}</h2>
+{{ section.settings.text }}
+
+{% schema %}
+{
+  "name": "Landing Page Hero Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Title",
+      "default": "Talk about your brand"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing Page Hero Text",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

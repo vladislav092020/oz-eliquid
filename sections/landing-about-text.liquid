@@ -1,0 +1,41 @@
+<div class="aboutUsLanding">
+  <h3>{{ section.settings.about_title }}</h3>
+{{ section.settings.text }}
+<a class="laBtn" href="{{ section.settings.button_url }}">{{ section.settings.about_link }}</a>
+</div>
+{% schema %}
+{
+  "name": "Rich text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "about_title",
+      "label": "Title",
+      "default": "About Us"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+    },
+ 	{
+      "type": "text",
+      "id": "about_link",
+      "label": "Button Text",
+      "default": "Apply for a wholesale account"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing About Text",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

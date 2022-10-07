@@ -1,0 +1,67 @@
+{%- comment %}<locksmith:8e98>{% endcomment -%}
+  {%- include 'locksmith' -%}
+{%- comment %}</locksmith:8e98>{% endcomment -%}
+
+<!doctype html>
+<html class="no-js" lang="{{ shop.locale }}">
+  <head>
+    {{ locksmith_initializations }}
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+
+    <title>
+      {{- shop.name -}}
+    </title>
+
+    {% if page_description != blank %}
+      {%- comment %}<locksmith:377a>{% endcomment -%}
+        {%- capture var %}{% render 'locksmith-variables', variable: 'transparent', hiding_scope: 'resource' %}{% endcapture %}{% if var == 'true' %}<meta name="description" content="{{ page_description | escape }}">{% endif -%}
+        {%- comment %}original: <meta name="description" content="{{ page_description | escape }}">{%- endcomment %}
+      {%- comment %}</locksmith:377a>{% endcomment -%}
+    {% endif %}
+
+    {% include 'favicon' %}
+
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta name="viewport" content="width=device-width">
+
+    {% assign twitter_handle = settings.social_twitter | split: 'twitter.com/' | last %}
+    {%
+      include 'social-meta-tags',
+      twitter_handle: settings.twitter_handle
+    %}
+
+    {% include 'globo.filter.script' %}{{ content_for_header }}
+
+    <script>
+      document.documentElement.className=document.documentElement.className.replace(/\bno-js\b/,'js');
+      if(window.Shopify&&window.Shopify.designMode)document.documentElement.className+=' in-theme-editor';
+      if(('ontouchstart' in window)||window.DocumentTouch&&document instanceof DocumentTouch)document.documentElement.className=document.documentElement.className.replace(/\bno-touch\b/,'has-touch');
+    </script>
+
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+  </head>
+
+  <body class="template-{{ template | split: '.' | first }}">
+    <main class="site-main" aria-label="main content" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% comment %}
+      Modal container, used on Collections, Password, and QuickShop
+    {% endcomment %}
+    {% include 'modal' %}
+
+    {% assign theme_script = 'superstore.js' %}
+    {% if settings.use_minified_js %}
+      {% assign theme_script = 'superstore.min.js' %}
+    {% endif %}
+    <script
+      data-scripts
+      src="{{ theme_script | asset_url }}"
+      data-pxu-polyfills="{{ 'polyfills.js' | asset_url }}"
+    >
+    </script>
+  {% include 'globo.filter.action' %}
+	</body>
+</html>

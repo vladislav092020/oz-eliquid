@@ -1,0 +1,15 @@
+$(document).ready(function () {
+
+$('#special-order-note').on('change keyup keydown', function () {
+
+$.post('/cart.js', {
+
+attributes: {
+'Special Order Note': $(this).val()
+}
+
+}).done(function () {
+
+});
+});
+});

@@ -1,0 +1,156 @@
+{% comment %}
+  Product form
+
+  @param product
+
+  @param selected_variant
+{% endcomment %}
+
+{% if is_product_modal and settings.quickshop_show_dcb %}
+  {% assign product_smart_buttons = true %}
+{% endif %}
+
+{% if is_product_modal == false and section.settings.show_dcb %}
+  {% assign product_smart_buttons = true %}
+{% endif %}
+
+{% if is_cross_sell or selected_variant.available == false %}
+  {% assign product_smart_buttons = false %}
+{% endif %}
+
+{% assign product_form_class = '' %}
+{% if product_smart_buttons %}
+  {% assign product_form_class = 'smart-payment-enabled' %}
+{% endif %}
+
+{% if show_quantity == nil %}
+  {% assign show_quantity = true %}
+{% endif %}
+
+{% form 'product', product, class: product_form_class, data-product-form: '' %}
+  {% if product.has_only_default_variant %}
+    <input
+      name="id"
+      value="{{ product.variants[0].id }}"
+      type="hidden">
+  {% else %}
+    {%
+      render 'product-options',
+      product: product,
+      selected_variant: selected_variant,
+      style: settings.product_option_style
+    %}
+  {% endif %}
+
+  {% if settings.product_show_stock_level != 'hidden'%}
+     {%
+        render 'product-stock-level',
+        container: 'product_page',
+        variant: selected_variant,
+        inventory_quantity: selected_variant.inventory_quantity
+      %}
+  {% endif %}
+  {% capture var %}{% render 'locksmith-variables', variable: 'access_granted', scope: 'subject', subject: product %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_access_granted = true %}{% else %}{% assign locksmith_access_granted = false %}{% endif %}<br>
+  {% if customer.tags contains "wholesale customer" %}
+  <div class="product-form--atc">
+    {% if show_quantity %}
+      <div class="product-form--atc-qty form-fields--qty" data-quantity-wrapper>
+        <div class="form-field form-field--qty-select">
+          <div class="form-field-select-wrapper">
+            <select
+              id="product-quantity-select"
+              class="form-field-input form-field-select"
+              aria-label="{{ 'general.general.quantity' | t }}"
+              data-quantity-select
+            >
+              {% for i in (1..9) %}
+                <option {% if i == 1 %}selected {% endif %}value="{{ i }}">
+                  {{ i }}
+                </option>
+              {% endfor %}
+              <option value="10+">
+                10+
+              </option>
+            </select>
+            <label
+              for="product-quantity-select"
+              class="form-field-title"
+            >
+              {{ 'general.general.quantity' | t }}
+            </label>
+            {% render 'icon-library', id: 'icon-chevron-down-small' %}
+          </div>
+        </div>
+        <div class="form-field form-field--qty-input hidden">
+          <input
+            id="product-quantity-input"
+            class="form-field-input form-field-number form-field-filled"
+            value="1"
+            name="quantity"
+            type="text"
+            pattern="\d*"
+            aria-label="{{ 'general.general.quantity' | t }}"
+            data-quantity-input
+          >
+          <label
+            for="product-quantity-input"
+            class="form-field-title"
+          >
+            {{ 'general.general.quantity' | t }}
+          </label>
+        </div>
+      </div>
+    {% else %}
+      <input name="quantity" type="hidden" value="1">
+    {% endif %}
+
+    <button
+      class="product-form--atc-button {% unless selected_variant.available %}disabled{% endunless %}"
+      type="submit"
+      {% unless selected_variant.available %}disabled{% endunless %}
+      data-product-atc
+    >
+      <span class="atc-button--text" data-product-atc-text>
+        {% if selected_variant.available %}
+          {{ 'product.buttons.add_to_cart' | t }}
+        {% else %}
+          {{ 'product.buttons.sold_out' | t }}
+        {% endif %}
+      </span>
+      <span class="atc-button--icon">
+        {% render 'icon-library', id: 'icon-spinner' %}
+      </span>
+    </button>
+  </div>
+
+  {% for variant in product.variants %}
+    {%for value in variant.metafields.bundles_app.content.value %}
+      <input  type="hidden" name="properties[ChildProductSKU{{ forloop.index }}]" value="{{ value.sku }}">
+      <input  type="hidden" name="properties[ChildProductQuantity{{ forloop.index }}]" value="{{ value.quantity }}">
+    {% endfor %}
+  {% endfor %}
+
+  {% if product_smart_buttons %}
+    {{ form | payment_button }}
+  {% endif %}
+  {% else %}
+  <div class="product-form--atc not-login">
+    Please log in to access wholesale prices and ordering functions. If you do not have a wholesale account with Oz-Eliquid, please touch base with our team to apply 
+    <a href="/account/login" class="registration-button cta">Login or Register</a>
+  </div>
+  {% endif %}
+{% endform %}
+<style>
+.product-form--atc.not-login a.registration-button.cta {
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #000;
+    width: 100%;
+    padding: 11px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+</style>
+

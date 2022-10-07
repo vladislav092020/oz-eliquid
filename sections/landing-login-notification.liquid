@@ -1,0 +1,35 @@
+{% if customer  %}
+{% else %}
+<div class="headerAccount">
+  	{{ section.settings.text }}
+  
+</div> 
+{% endif %}
+
+
+
+{% schema %}
+{
+  "name": "Login notification bar",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+		"default": "<p>Text for login notification at homepage</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Login notification bar",
+      "category": "Richtext"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

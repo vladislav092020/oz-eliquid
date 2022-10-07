@@ -1,0 +1,60 @@
+<script>
+  if (typeof(Spurit) === 'undefined') {
+    var Spurit = {};
+  }
+  if (typeof(Spurit.Loyaltypoints) === 'undefined') {
+    Spurit.Loyaltypoints = {};
+  }
+  Spurit.Loyaltypoints.snippet = (function(){
+    var snippet = {
+      appId: '4',
+      appName: 'Loyaltypoints',
+      shopHash: 'de5f954a8dcc0408f750586176b88ca2',
+      customer: {
+        id: 0,
+        balance: 0,
+        spent: 0,
+        rewards: {
+                            purchase: 0,                            share: 0,                            referral: 0,                            register: 0,                            visits: 0,                            dob: 0,                            manual: 0                    },
+        referrerId: ''
+      }
+    };
+
+    {% if customer %}
+      var topup = JSON.parse('{{customer.metafields.Loyaltypoints.topup}}' || '{}');
+      snippet.customer = {
+        id: {{customer.id}},
+        balance: 1 * "{{customer.metafields.Loyaltypoints.balance}}",
+        spent: 1 * '{{customer.metafields.Loyaltypoints.charge}}',
+        rewards: {
+                      purchase: typeof(topup.purchase) !== 'undefined' ? topup.purchase : 0,                      share: typeof(topup.share) !== 'undefined' ? topup.share : 0,                      referral: typeof(topup.referral) !== 'undefined' ? topup.referral : 0,                      register: typeof(topup.register) !== 'undefined' ? topup.register : 0,                      visits: typeof(topup.visits) !== 'undefined' ? topup.visits : 0,                      dob: typeof(topup.dob) !== 'undefined' ? topup.dob : 0,                      manual: typeof(topup.manual) !== 'undefined' ? topup.manual : 0                  },
+        referrerId: '{{customer.metafields.Loyaltypoints.referrerId}}'
+      };
+    {% endif %}
+
+    {% if product %}
+      snippet.product = {{product | json}};
+      snippet.current_variant = {{ product.selected_or_first_available_variant | json }};
+    {% endif %}
+
+    {% if cart %}
+      snippet.cartItems = {{ cart.items | json }};
+    {% endif %}
+
+    return snippet;
+  })();
+</script>
+<script>
+  if(typeof(Spurit) === 'undefined'){
+    Spurit = {};
+  }
+  if(typeof(Spurit.globalSnippet) === 'undefined'){
+    Spurit.globalSnippet = {
+      shop_currency: '{{ shop.currency }}',
+      money_format: '{{ shop.money_format }}',
+      cart: {{ cart | json }},
+      customer_id: '{{ customer.id }}'
+    };
+  }
+</script><script src="https://cdn-spurit.com/shopify-apps/loyaltypoints/common.js"></script>
+<link href="https://cdn-spurit.com/shopify-apps/loyaltypoints/common.css" rel="stylesheet" type="text/css" media="all">

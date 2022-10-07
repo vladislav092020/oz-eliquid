@@ -1,0 +1,126 @@
+<div data-section-id="{{ section.id }}">
+
+  {% assign sectionTitle = section.settings.title | escape %}
+
+  {% if section.blocks.size == 0 %}
+    {% assign featureCount = 2 %}
+  {% else %}
+    {% assign featureCount = 0 %}
+    {% for block in section.blocks %}
+      {% assign featureCount = featureCount | plus: 1 %}
+    {% endfor %}
+  {% endif %}
+
+  <div class="landingApart">
+
+    <div class="landingModule">
+
+      {%
+        include 'home-section-title',
+        conditional: section.blocks,
+        onboarding: 'onboarding.image_gallery.title'
+      %}
+
+      <div class="landingApart-items">
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            {% assign textApart = block.settings.text-apart | escape %}
+            {% assign heading = block.settings.title | escape %}
+            {% assign image = block.settings.image %}
+
+            {%- capture image_html -%}
+              {% if image %}
+                {%
+                  include 'rimg',
+                  img: image,
+                  lazy: true
+                %}
+              {% else %}
+                {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            {%- endcapture -%}
+
+            <div class="landingApart-contentWrap">
+              <div class="la-image">
+                {{- image_html -}}
+              </div>
+
+              {% if textApart != blank or heading != blank or textApart != blank %}
+                <div class="apartContent">
+
+                  {% if heading != blank %}
+                    <h3>{{ heading }}</h3>
+                  {% endif %}
+				  
+                  {% if textApart != blank %}
+                    <p>{{ textApart }}</p>
+                  {% endif %}
+
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Apart Text",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Landing Page Apart Text"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "1440 x 640px .jpg recommended"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Image with text"
+        },
+        {
+          "type": "textarea",
+          "id": "text-apart",
+          "label": "Subheading",
+          "default": "Subheading"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "Gallery",
+      "blocks": [
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}
